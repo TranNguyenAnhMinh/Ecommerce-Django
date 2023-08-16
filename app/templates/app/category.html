@@ -1,0 +1,33 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {%block register%}
+   
+    <div class="row" style="width: 100%;">
+      {%for product in products %}
+        <div class="col-lg-3">
+            <img class="thumbnail" src="{{product.ImageURL}}" alt=""style="width: 100%;">
+            <div class="box-element product">
+                <h6><strong>{{product.name}}</strong></h6>
+                <hr>
+                <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart" type="button">Add</button>
+                <a class="btn btn-outline-success" href="#">Xem chi tiết</a>
+                <h4 style="display: inline-block; float: right;"><strong>{{product.price| floatformat:0 }}₫</strong></h4>
+            </div>
+        </div>
+      {% endfor %}
+        
+    </div>
+    {%endblock register%}
+
+</body>
+
+</html>
