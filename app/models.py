@@ -21,7 +21,10 @@ class Product(models.Model):
     price = models.FloatField()
     digital = models.BooleanField(default=False, null=True, blank=False)
     image = models.ImageField(null=True, blank=True)
+    supimage = models.ImageField(null=True, blank=True)
     detail = models.TextField(blank=True, null=True)
+   
+    # Trả về một chuỗi đại diện cho ddối tượng Product
     def __str__(self):
         return self.name
     @property
@@ -31,6 +34,14 @@ class Product(models.Model):
         except:
             url = ''
         return url
+    @property
+    def SImageURL(self):
+        try:
+            url = self.supimage.url
+        except:
+            url = ''
+        return url
+    
 class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     date_order = models.DateTimeField(auto_now_add=True)

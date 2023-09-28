@@ -1,0 +1,36 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block register %}
+    <h1>Lịch sử mua hàng</h1>
+    <div class="box-element">
+        <div class="cart-row">
+            <div style="flex:2"></div>
+            <div style="flex:2"><strong>Tên sản phẩm</strong></div>
+            <div style="flex:1"><strong>Giá</strong></div>
+            <div style="flex:1"><strong>Số Lượng</strong></div>
+        </div>
+        {% if orders %}
+            {% for order in orders %}
+                <h2>Order ID: {{ order.id }}</h2>
+                <p>Order Date: {{ order.date_order }}</p> <!-- Update this line -->
+                <ul>
+                    {% for order_item in order.orderitem_set.all %}
+                    <div class="cart-row">
+                        <div style="flex:2; white-space: nowrap;"><img src="{{ order_item.product.ImageURL }}" alt="{{ order_item.product.name }}" width="150" height="100"></div>
+                        <div style="flex:2; white-space: nowrap;"><p>Product: {{ order_item.product.name }}</p></div>
+                        <div style="flex:1; white-space: nowrap;"><p>{{order_item.product.price| floatformat:0}}₫</p></div>
+                        <div style="flex:1; white-space: nowrap;">
+                            <p class="quantity">{{order_item.quantity}}</p>
+                        </div>
+                        <!-- Add any other relevant information about the order item -->
+                    </div>
+                    {% endfor %}
+                </ul>
+                <p>Total Amount: {{ order.get_cart_total }}</p>
+            {% endfor %}
+        {% else %}
+            <p>No purchase history available.</p>
+        {% endif %}
+    </div>
+{% endblock register %}

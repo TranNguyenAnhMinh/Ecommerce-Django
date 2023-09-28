@@ -10,7 +10,7 @@
 </head>
 <body>
     {%block register%}
-    <h5> Reust search for {{searched}}</h5><br>
+    <h5> Kết quả tìm kiếm cho: {{searched}}</h5><br>
     <div class="row" style="width: 100%;">
       {%for product in keys %}
         <div class="col-lg-3">
@@ -19,7 +19,7 @@
                 <h6><strong>{{product.name}}</strong></h6>
                 <hr>
                 <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart" type="button">Add</button>
-                <a class="btn btn-outline-success" href="#">Xem chi tiết</a>
+                <a class="btn btn-outline-success" href="{% url 'detail' %}?id={{ product.id }}">Xem chi tiết</a>
                 <h4 style="display: inline-block; float: right;"><strong>{{product.price| floatformat:0 }}₫</strong></h4>
             </div>
         </div>

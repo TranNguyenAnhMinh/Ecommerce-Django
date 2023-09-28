@@ -1,6 +1,5 @@
 {% extends 'app/base.html' %}
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +19,7 @@
                 <hr>
                 <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart" type="button">Add</button>
                 <a class="btn btn-outline-success" href="#">Xem chi tiết</a>
-                <h4 style="display: inline-block; float: right;"><strong>{{product.price| floatformat:0 }}₫</strong></h4>
+                <h4 style="display: inline-block;text-align: right;"><strong>{{product.price| floatformat:0}}₫</strong></h4>
             </div>
         </div>
       {% endfor %}
