@@ -74,8 +74,8 @@ class ShippingAddress(models.Model):
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=False)
     address = models.CharField(max_length=200, null=True)
     city = models.CharField(max_length=200, null=True)
-    state = models.CharField(max_length=200, null=True)
+    recipient_name = models.CharField(max_length=200, null=True)
     mobile = models.CharField(max_length=10, null=True)
     date_added = models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return self.address
+        return self.customer.username

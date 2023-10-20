@@ -91,18 +91,39 @@
     </ul>
   </li>
   <div id="product-container" style="display: flex;flex-wrap: wrap"></div>
-  {%for product in products %}
+ 
+  <div id="product-container" style="display: flex; flex-wrap: wrap">
+    {% for product in page %}
     <div class="col-lg-3">
-        <img class="thumbnail" src="{{product.ImageURL}}" alt="" style="width: 100%; height: 250px;">
-        <div class="box-element product">
-            <h6><strong>{{product.name}}</strong></h6>
-            <hr>
-            <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart" type="button">Add</button>
-            <a class="btn btn-outline-success" href="{% url 'detail'%}?id={{product.id}}">Xem chi tiết</a>
-            <h4 style="display: inline-block; float: right;"><strong>{{product.price| floatformat:0 }}₫</strong></h4>
-        </div>
-    </div>
-  {% endfor %}
+      <img class="thumbnail" src="{{product.ImageURL}}" alt="" style="width: 100%; height: 250px;">
+      <div class="box-element product">
+          <h6><strong>{{product.name}}</strong></h6>
+          <hr>
+          <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart" type="button">Add</button>
+          <a class="btn btn-outline-success" href="{% url 'detail'%}?id={{product.id}}">Xem chi tiết</a>
+          <h4 style="display: inline-block; float: right;"><strong>{{product.price| floatformat:0 }}₫</strong></h4>
+      </div>
+  </div>
+    {% endfor %}
+</div>
+<div class="pagination" style="align-items: center;">
+  <span class="step-links">
+      {% if page.has_previous %}
+          <a href="?page=1">Trang đầu</a>
+          <a href="?page={{ page.previous_page_number }}">&laquo;</a>
+      {% endif %}
+
+      <span class="current-page">
+          Page {{ page.number }} of {{ page.paginator.num_pages }}.
+      </span>
+
+      {% if page.has_next %}
+          <a href="?page={{ page.next_page_number }}">&raquo;</a>
+          <a href="?page={{ page.paginator.num_pages }}">Trang cuối </a>
+      {% endif %}
+  </span>
+</div>
+
 </div>
 </div>
 

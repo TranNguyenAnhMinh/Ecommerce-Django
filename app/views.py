@@ -7,7 +7,8 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.http import JsonResponse
-
+from .forms import ShippingAddressForm
+from django.core.paginator import Paginator
 
 # Create your views here.
 def purchase_history(request):
@@ -113,22 +114,43 @@ def logoutPage(request):
     logout(request)
     return redirect('login')
 def home(request):
+    # Lấy danh sách sản phẩm (tất cả sản phẩm)
+    products = Product.objects.all()
+
+    # Lấy 3 sản phẩm nổi bật
+    first_three_products = products[:3]
+
+    # Số lượng sản phẩm trên mỗi trang
+    items_per_page = 8
+
+    # Tạo một đối tượng Paginator
+    paginator = Paginator(products, items_per_page)
+
+    # Lấy số trang từ tham số truy vấn (nếu có)
+    page_number = request.GET.get('page')
+
+    # Lấy danh sách sản phẩm cho trang hiện tại
+    page = paginator.get_page(page_number)
+
     if request.user.is_authenticated:
         customer = request.user
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
-        
     else:
         items = []
-        order ={'get_cart_items':0, 'get_cart_total':0}
+        order = {'get_cart_items': 0, 'get_cart_total': 0}
         cartItems = order['get_cart_items']
         messages.error(request, 'Vui lòng đăng nhập để tiếp tục mua sắm!')
-    categories = Category.objects.filter(is_sub = False)
-    
-    products = Product.objects.all()
-    first_three_products = products[:3] 
-    context = {'products':products,'cartItems':cartItems,'categories':categories,'first_three_products': first_three_products}
+
+    categories = Category.objects.filter(is_sub=False)
+
+    context = {
+        'first_three_products': first_three_products,
+        'page': page,
+        'cartItems': cartItems,
+        'categories': categories,
+    }
     return render(request, 'app/home.html', context)
 def cart(request):
     if request.user.is_authenticated:
@@ -151,19 +173,53 @@ def checkout(request):
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
-        categories = Category.objects.filter(is_sub = False)
-        order.complete = True
-        order.save()
-        new_order = Order.objects.create(customer=customer, complete=False)
+        categories = Category.objects.filter(is_sub=False)
+
+        if request.method == 'POST':
+            shipping_address_form = ShippingAddressForm(request.POST)
+            if shipping_address_form.is_valid():
+                address = shipping_address_form.cleaned_data['address']
+                city = shipping_address_form.cleaned_data['city']
+                recipient_name = shipping_address_form.cleaned_data['recipient_name']
+                mobile = shipping_address_form.cleaned_data['mobile']
+
+                # Lưu thông tin giao hàng vào cơ sở dữ liệu
+                shipping_address = ShippingAddress.objects.create(
+                    customer=customer,
+                    order=order,
+                    address=address,
+                    city=city,
+                    recipient_name=recipient_name,
+                    mobile=mobile
+                )
+
+                # Đánh dấu đơn hàng là đã hoàn thành
+                order.complete = True
+                order.save()
+
+                # Tạo một đơn hàng mới cho khách hàng
+                new_order = Order.objects.create(customer=customer, complete=False)
+
+                # Redirect đến trang cảm ơn 
+                return redirect('home')
+
+            else:
+                print(shipping_address_form.errors)  
+                messages.error(request, 'Vui lòng kiểm tra thông tin giao hàng.')
+              
         
+
     else:
         items = []
-        order ={'get_cart_items':0, 'get_cart_total':0}
+        order = {'get_cart_items': 0, 'get_cart_total': 0}
         cartItems = order['get_cart_items']
-        categories = Category.objects.filter(is_sub = False)
-    context = {'items':items, 'order':order,'cartItems':cartItems,'categories':categories}
-    
-    return render(request, 'app/checkout.html',context)
+        categories = Category.objects.filter(is_sub=False)
+        messages.error(request, 'Vui lòng đăng nhập để tiếp tục mua sắm!')
+
+    context = {'items': items, 'order': order, 'cartItems': cartItems, 'categories': categories}
+    shipping_address_form = ShippingAddressForm()  # Tạo một biểu mẫu trống cho người dùng
+    context['shipping_address_form'] = shipping_address_form
+    return render(request, 'app/checkout.html', context)
     
    
 def updateItem(request):
