@@ -11,6 +11,8 @@ from .forms import ShippingAddressForm
 from django.core.paginator import Paginator
 
 # Create your views here.
+def thankyou(request):
+  return render(request, 'app/thankyou.html')
 def purchase_history(request):
     if request.user.is_authenticated:
         customer = request.user
@@ -201,7 +203,7 @@ def checkout(request):
                 new_order = Order.objects.create(customer=customer, complete=False)
 
                 # Redirect đến trang cảm ơn 
-                return redirect('home')
+                return redirect('thankyou')
 
             else:
                 print(shipping_address_form.errors)  

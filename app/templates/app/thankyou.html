@@ -1,0 +1,22 @@
+{% extends 'app/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content_checkout %}
+  <div class="thankyou-page" style="display: flex;align-items: center;flex-direction: column;justify-content: center;">
+    <img src="{% static 'images/thankyou.jpg' %}" alt="Thank You">
+    <h1>Cảm ơn bạn đã đặt hàng!</h1>
+    <p>Chúng tôi sẽ liên hệ với bạn sớm nhất có thể.</p>
+    <a href="{% url 'home' %}" class="btn btn-primary">Quay về trang chủ</a>
+  </div>
+<!-- thankyou.html -->
+
+{% endblock content_checkout%}
+</body>
+</html>
