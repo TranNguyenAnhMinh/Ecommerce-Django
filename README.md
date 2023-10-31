@@ -8,6 +8,8 @@
 
 -Quản lý khách hàng: Thêm/sửa/xóa thông tin khách hàng
 
+-Lịch sử mua hàng
+
 -Xem danh sách sản phẩm
 
 -Tìm kiếm sản phẩm
