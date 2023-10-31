@@ -25,12 +25,16 @@
 -HTML/CSS/Javascript/Bootstrap cho giao diện frontend
 
 -Cơ sở dữ liệu: SQLite
-## run project
+## Chạy project
 ### Cài đặt các thư viện cần thiết bằng pip
--pip install django
+```sh
+pip install django
 
--pip install pillow
+pip install pillow
+```
 ### Cách chạy project
--python manage.py migrate
+```sh
+python manage.py migrate
 
--python manage.py runserver
+python manage.py runserver
+```
