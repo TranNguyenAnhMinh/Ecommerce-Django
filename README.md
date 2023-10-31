@@ -28,13 +28,14 @@
 ## Chạy project
 ### Cài đặt các thư viện cần thiết bằng pip
 ```sh
+// cài thư viện django
 pip install django
-
+// cài thư viện xử lý hình ảnh
 pip install pillow
 ```
 ### Cách chạy project
 ```sh
 python manage.py migrate
-
+//chạy server
 python manage.py runserver
 ```
