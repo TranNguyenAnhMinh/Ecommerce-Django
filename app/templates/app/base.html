@@ -89,19 +89,19 @@
         <form class="d-flex" role="search" method=POST action="{% url 'search' %}">
           {% csrf_token %}
           <div class="input-group mb-6 " style="margin-right: 1rem;">
-            <input type="text" class="form-control" placeholder="Tìm gì đó i.." aria-label="Recipient's username" aria-describedby="button-addon2"type="search" placeholder="Search" aria-label="Search" name='searched'>
+            <input type="text" class="form-control" placeholder="Tìm gì đó i.." 
+            aria-label="Recipient's username" aria-describedby="button-addon2"type="search" placeholder="Search" aria-label="Search" name='searched'>
             <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="bi bi-search"></i></button>
           </div>
         </form>
       </div>
-      
+      <!-- kiểm tra người dùng đã dădng nhập chưa và hiển thị nút tương ứng -->
       {% if user.is_authenticated %}
       <div class="form-inline my-2 my-lg-0">
         <span>Heluu, {{ request.user }}</span>
         <span><a href="{% url 'logout' %}">Đăng xuất</a></span>
       </div>
       {% endif %}
-
       {% if user.is_authenticated %}
       <div class="form-inline my-2 my-lg-0 d-none">
         <a type="button" class="btn btn-primary btn-sm" class="nav-link" href="{% url 'login' %}" >Đăng nhập</a>
@@ -133,7 +133,7 @@
 
   <!-- footer -->
   <footer class="container--fluid text-center fixed-bottom p-2 mt-5 " style="background-color: white;">
-    Made by trannguyenanhminnh (cái shop chưa có tên :DD)
+    Made by trannguyenanhminnh 
   </footer>
   <!-- end footer -->
 

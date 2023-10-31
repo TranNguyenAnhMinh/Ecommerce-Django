@@ -16,7 +16,7 @@
 				{% endfor %}
 				{% for field in shipping_address_form %}
 				<div class="fieldWrapper">
-					{{ field.errors }}
+				
 					{{ field.label_tag }} {{ field }}
 					{% if field.name == 'mobile' %}
 					<span class="error">{{ field.errors }}</span>
@@ -31,10 +31,7 @@
 		</div>
 
 		<br>
-		<div class="box-element hidden" id="payment-info">
-			<small>Paypal Options</small>
-		</div>
-
+	
 	</div>
 
 	<div class="col-lg-6">
@@ -67,66 +64,4 @@
 		</div>
 	</div>
 </div>
-<script>
-	document.getElementById("form").addEventListener("submit", function(event) {
-		// Ngăn form được gửi đi ngay lập tức
-		event.preventDefault();
-	
-		// Lấy giá trị của trường số điện thoại
-		var mobileField = document.getElementById("id_mobile");
-		var mobileValue = mobileField.value;
-	
-		// Lấy thẻ hiển thị thông báo lỗi
-		var errorSpan = document.getElementById("mobile-error");
-	
-		// Kiểm tra nếu số điện thoại không hợp lệ
-		if (!/^\d{10}$/.test(mobileValue)) {
-			// Hiển thị thông báo lỗi gần trường số điện thoại
-			errorSpan.textContent = "Số điện thoại phải đúng 10 chữ số";
-		} else {
-			// Nếu hợp lệ, xóa thông báo lỗi
-			errorSpan.textContent = "";
-			// Tiếp tục gửi form
-			this.submit();
-		}
-	});
-	</script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-	function placeOrder() {
-
-		fetch("{% url 'send_order_email' %}", {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'X-CSRFToken': "{{ csrf_token }}",
-			},
-			body: JSON.stringify({
-
-			}),
-		})
-			.then(response => response.json())
-			.then(data => {
-				console.log(data);  // In dữ liệu phản hồi từ máy chủ (có thể là thông báo gửi email thành công)
-			});
-
-		// Hiển thị thông báo đặt hàng thành công sử dụng SweetAlert2
-		Swal.fire({
-			icon: 'success',
-			title: 'Đặt hàng thành công!',
-			text: 'Cảm ơn bạn đã đặt hàng. Chúng tôi sẽ gửi thông tin đơn hàng cho bạn trong thời gian sớm nhất.',
-			showConfirmButton: false,
-			timer: 3000
-		});
-
-		setTimeout(function () {
-			window.location.href = "{% url 'home' %}";
-		}, 3000);
-	}
-
-	document.getElementById("form").addEventListener("submit", function (event) {
-		event.preventDefault(); // Ngăn form được gửi đi ngay lập tức
-		placeOrder(); // Gọi hàm placeOrder khi nhấn nút "Đặt hàng"
-	});
-</script> -->
 {% endblock content_checkout %}

@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 # Create your models here.
 class Category(models.Model):
-    sub_category = models.ForeignKey('self', on_delete=models.CASCADE, related_name = 'sub_categoryes',null = True, blank=True)
+    sub_category = models.ForeignKey('self', on_delete=models.CASCADE, 
+                                     related_name = 'sub_categoryes',null = True, blank=True)
     is_sub = models.BooleanField(default=False)
     name = models.CharField(max_length=200, null=True)
     slug = models.SlugField(max_length=200, unique=True)
@@ -19,12 +20,11 @@ class Product(models.Model):
     category = models.ManyToManyField(Category,related_name='product')
     name = models.CharField(max_length=200, null=True)
     price = models.FloatField()
+    quantity =models.PositiveIntegerField(default=0) 
     digital = models.BooleanField(default=False, null=True, blank=False)
     image = models.ImageField(null=True, blank=True)
     supimage = models.ImageField(null=True, blank=True)
     detail = models.TextField(blank=True, null=True)
-   
-    # Trả về một chuỗi đại diện cho ddối tượng Product
     def __str__(self):
         return self.name
     @property
@@ -50,12 +50,12 @@ class Order(models.Model):
     def __str__(self):
         return str(self.id)
     @property
-    def get_cart_items(self):
+    def get_cart_items(self):# tính tổng số lượng sản phẩm trong giỏ hàng
         orderitems = self.orderitem_set.all()
         total = sum([item.quantity for item in orderitems])
         return total
     @property
-    def get_cart_total(self):
+    def get_cart_total(self):#Tính tổng giá trị giỏ hàng.
         orderitems = self.orderitem_set.all()
         total = sum([item.get_total for item in orderitems])
         return total
@@ -66,7 +66,7 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(default=0, null=True, blank=False)
     date_added = models.DateTimeField(auto_now_add=True)
     @property
-    def get_total(self):
+    def get_total(self):#giá trị tổng của một item trong giỏ hàng
         total = self.product.price * self.quantity
         return total
 class ShippingAddress(models.Model):

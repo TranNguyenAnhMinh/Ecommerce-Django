@@ -2,31 +2,34 @@
 {% load static %}
 {% block banner_slider %}
 <div id="carouselExampleIndicators" class="carousel slide">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="{%static 'app/images/bannerdongho1.jpg'%}" class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item">
-        <img src="{%static 'app/images/slider_2.jpg'%}" class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item">
-        <img src="{%static 'app/images/slider_3.jpg'%}" class="d-block w-100" alt="...">
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+      aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+      aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+      aria-label="Slide 3"></button>
   </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{%static 'app/images/bannerdongho1.jpg'%}" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="{%static 'app/images/slider_2.jpg'%}" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="{%static 'app/images/slider_3.jpg'%}" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
 {% endblock banner_slider %}
 {% block main-content %}
 {% for message in messages %}
@@ -38,20 +41,28 @@
 <hr>
 
 <!-- highlightprod -->
+<!-- highlightprod -->
 {% for product in first_three_products %}
 <p class="font-weight-bold h3" style="width: 100%; padding-left: 5.5rem; padding-top: 1.5rem">{{ product.name }}</p>
 <div class="higItem" style="display: flex;">
   {% if forloop.counter0 == 1 %}
-  <div class="box-element product" style="display: flex; flex-direction: column; justify-content: center;margin-left: 5rem;">
+  <div class="box-element product"
+    style="display: flex; flex-direction: column; justify-content: center; margin-left: 5rem;">
     <img class="thumbnail" src="{{ product.ImageURL }}" alt="" style="align-items: center; justify-content: center;">
-    <h6 style="display: inline-block;text-align: center;"><strong>{{ product.name }}</strong></h6>
+    <h6 style="display: inline-block; text-align: center;"><strong>{{ product.name }}</strong></h6>
     <hr>
-    
-    <h4 style="display: inline-block;text-align: center;"><strong>{{ product.price|floatformat:0 }}₫</strong></h4>
-    <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart" type="button">Thêm vào giỏ hàng</button>
+
+    {% if product.quantity > 0 %}
+    <h4 style="display: inline-block; text-align: center;"><strong>{{ product.price|floatformat:0 }}₫</strong></h4>
+    <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart"
+      type="button">Thêm vào giỏ hàng</button>
+    {% else %}
+    <p style="color: red; text-align: center;">Hết hàng</p>
+    {% endif %}
+
     <a class="btn btn-outline-success" href="{% url 'detail' %}?id={{ product.id }}">Xem chi tiết</a>
   </div>
-  <div class="box-element product" >
+  <div class="box-element product">
     <img src="{{ product.SImageURL }}" class="card-img" alt="..." style="width: 63rem;">
   </div>
   {% else %}
@@ -60,22 +71,30 @@
   </div>
   <div class="box-element product" style="display: flex; flex-direction: column; justify-content: center;">
     <img class="thumbnail" src="{{ product.ImageURL }}" alt="" style="align-items: center; justify-content: center;">
-    <h6 style="display: inline-block;text-align: center;"><strong>{{ product.name }}</strong></h6>
-   
+    <h6 style="display: inline-block; text-align: center;"><strong>{{ product.name }}</strong></h6>
+
     <hr>
-    <h4 style="display: inline-block;text-align: center;"><strong>{{ product.price|floatformat:0 }}₫</strong></h4>
-    <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart" type="button">Thêm vào giỏ hàng</button>
+
+    {% if product.quantity > 0 %}
+    <h4 style="display: inline-block; text-align: center;"><strong>{{ product.price|floatformat:0 }}₫</strong></h4>
+    <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart"
+      type="button">Thêm vào giỏ hàng</button>
+    {% else %}
+    <p style="color: red; text-align: center;">Hết hàng</p>
+    {% endif %}
+
     <a class="btn btn-outline-success" href="{% url 'detail' %}?id={{ product.id }}">Xem chi tiết</a>
   </div>
   {% endif %}
 </div>
 {% endfor %}
 
-  <div class="row" style="width: 100%;">
+
+<div class="row" style="width: 100%;">
   <div class="text-center font-weight-bold h2" style="padding-top:1.5rem ;">
-  <p >Tất cả sản phẩm</p>
-  <hr>
-  
+    <p>Tất cả sản phẩm</p>
+    <hr>
+
   </div>
   <li class="nav-item dropdown" style="list-style: none;">
     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -84,43 +103,52 @@
     <ul class="dropdown-menu">
       <li><button onclick="sortProductsByName()" class="btn ">Tên từ A-Z</button></li>
       <li><button onclick="sortProductsByNameHighToLow()" class="btn">Tên từ Z-A</button></li>
-      
       <li><button onclick="sortProductsByPrice()" class="btn">Giá từ thấp đén cao</button></li>
       <li><button onclick="sortProductsByPriceHighToLow()" class="btn">Giá từ cao đén thấp</button></li>
-     
     </ul>
   </li>
   <div id="product-container" style="display: flex;flex-wrap: wrap"></div>
- 
+
   <div id="product-container" style="display: flex; flex-wrap: wrap">
     {% for product in page %}
     <div class="col-lg-3">
       <img class="thumbnail" src="{{product.ImageURL}}" alt="" style="width: 100%; height: 250px;">
       <div class="box-element product">
-          <h6><strong>{{product.name}}</strong></h6>
-          <hr>
-          <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart" type="button">Add</button>
-          <a class="btn btn-outline-success" href="{% url 'detail'%}?id={{product.id}}">Xem chi tiết</a>
-          <h4 style="display: inline-block; float: right;"><strong>{{product.price| floatformat:0 }}₫</strong></h4>
+        <h6><strong>{{product.name}}</strong></h6>
+        <hr>
+        {% if product.quantity > 0 %}
+        <h4 style="float: right; padding-right: 10px;"><strong>{{product.price|floatformat:0}}₫</strong></h4>
+        <p style="display: inline-block;">Số lượng hàng còn: {{product.quantity}}</p>
+        <!-- Thuộc tính data-product chứa ID sản phẩm (product.id), và data-action chứa hành động "add" -->
+        <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart"
+          type="button">Thêm vào giỏ hàng</button>
+        <!-- check xem còn hàng hay không -->
+        {% else %}
+        <p style="color: red; text-align: center;">Hết hàng</p>
+        {% endif %}
+        <!-- Lây id của sản phẩm để hiển thị trang chi tiết của sản phẩm đó -->
+        <a class="btn btn-outline-success" href="{% url 'detail'%}?id={{product.id}}">Xem chi tiết</a>
       </div>
-  </div>
+    </div>
     {% endfor %}
+  </div>
+
 </div>
 <div class="pagination" style="align-items: center;">
   <span class="step-links">
-      {% if page.has_previous %}
-          <a href="?page=1">Trang đầu</a>
-          <a href="?page={{ page.previous_page_number }}">&laquo;</a>
-      {% endif %}
+    {% if page.has_previous %}
+    <a href="?page=1">Trang đầu</a>
+    <a href="?page={{ page.previous_page_number }}">&laquo;</a>
+    {% endif %}
 
-      <span class="current-page">
-          Page {{ page.number }} of {{ page.paginator.num_pages }}.
-      </span>
+    <span class="current-page">
+      Page {{ page.number }} of {{ page.paginator.num_pages }}.
+    </span>
 
-      {% if page.has_next %}
-          <a href="?page={{ page.next_page_number }}">&raquo;</a>
-          <a href="?page={{ page.paginator.num_pages }}">Trang cuối </a>
-      {% endif %}
+    {% if page.has_next %}
+    <a href="?page={{ page.next_page_number }}">&raquo;</a>
+    <a href="?page={{ page.paginator.num_pages }}">Trang cuối </a>
+    {% endif %}
   </span>
 </div>
 
@@ -133,93 +161,81 @@
     var productElements = productContainer.getElementsByClassName('col-lg-3');
     var productsArray = Array.from(productElements);
 
-    productsArray.sort(function(a, b) {
-        var priceA = parseFloat(a.querySelector('h4 strong').innerText.replace('₫', '').replace(',', ''));
-        var priceB = parseFloat(b.querySelector('h4 strong').innerText.replace('₫', '').replace(',', ''));
-        return priceB - priceA;
+    productsArray.sort(function (a, b) {
+      var priceA = parseFloat(a.querySelector('h4 strong').innerText.replace('₫', '').replace(',', ''));
+      var priceB = parseFloat(b.querySelector('h4 strong').innerText.replace('₫', '').replace(',', ''));
+      return priceB - priceA;
     });
 
     productContainer.innerHTML = '';
 
-    productsArray.forEach(function(product) {
-        productContainer.appendChild(product);
+    productsArray.forEach(function (product) {
+      productContainer.appendChild(product);
     });
-}
+  }
 
-function sortProductsByNameHighToLow() {
+  function sortProductsByNameHighToLow() {
     var productContainer = document.getElementById('product-container');
     var productElements = productContainer.getElementsByClassName('col-lg-3');
     var productsArray = Array.from(productElements);
 
-    productsArray.sort(function(a, b) {
-        var nameA = a.querySelector('h6 strong').innerText.toLowerCase();
-        var nameB = b.querySelector('h6 strong').innerText.toLowerCase();
-        if (nameA < nameB) {
-            return 1;
-        }
-        if (nameA > nameB) {
-            return -1;
-        }
-        return 0;
+    productsArray.sort(function (a, b) {
+      var nameA = a.querySelector('h6 strong').innerText.toLowerCase();
+      var nameB = b.querySelector('h6 strong').innerText.toLowerCase();
+      if (nameA < nameB) {
+        return 1;
+      }
+      if (nameA > nameB) {
+        return -1;
+      }
+      return 0;
     });
 
     productContainer.innerHTML = '';
 
-    productsArray.forEach(function(product) {
-        productContainer.appendChild(product);
+    productsArray.forEach(function (product) {
+      productContainer.appendChild(product);
     });
-}
+  }
   function sortProductsByPrice() {
-      // Retrieve the product elements
-      var productElements = document.getElementsByClassName('col-lg-3');
-  
-      // Convert the product elements to an array
-      var productsArray = Array.from(productElements);
-  
-      // Sort the products array based on price
-      productsArray.sort(function(a, b) {
-          var priceA = parseFloat(a.querySelector('h4 strong').innerText.replace('₫', '').replace(',', ''));
-          var priceB = parseFloat(b.querySelector('h4 strong').innerText.replace('₫', '').replace(',', ''));
-          return priceA - priceB;
-      });
-  
-      // Reorder the product elements in the DOM
-      var productContainer = document.getElementById('product-container');
-      productContainer.innerHTML = '';
-      productsArray.forEach(function(product) {
-          productContainer.appendChild(product);
-      });
+    var productElements = document.getElementsByClassName('col-lg-3');
+    var productsArray = Array.from(productElements);
+    productsArray.sort(function (a, b) {
+      var priceA = parseFloat(a.querySelector('h4 strong').innerText.replace('₫', '').replace(',', ''));
+      var priceB = parseFloat(b.querySelector('h4 strong').innerText.replace('₫', '').replace(',', ''));
+      return priceA - priceB;
+    });
+    var productContainer = document.getElementById('product-container');
+    productContainer.innerHTML = '';
+    productsArray.forEach(function (product) {
+      productContainer.appendChild(product);
+    });
   }
-  
-  function sortProductsByName() {
-      // Retrieve the product elements
-      var productElements = document.getElementsByClassName('col-lg-3');
-  
-      // Convert the product elements to an array
-      var productsArray = Array.from(productElements);
-  
-      // Sort the products array based on name
-      productsArray.sort(function(a, b) {
-          var nameA = a.querySelector('h6 strong').innerText.toLowerCase();
-          var nameB = b.querySelector('h6 strong').innerText.toLowerCase();
-          if (nameA < nameB) {
-              return -1;
-          }
-          if (nameA > nameB) {
-              return 1;
-          }
-          return 0;
-      });
-  
-      // Reorder the product elements in the DOM
-      var productContainer = document.getElementById('product-container');
-      productContainer.innerHTML = '';
-      productsArray.forEach(function(product) {
-          productContainer.appendChild(product);
-      });
-      
-  }
-  </script>
-<hr><hr><hr>
-{% endblock main-content %}
 
+  function sortProductsByName() {
+    var productElements = document.getElementsByClassName('col-lg-3');
+    var productsArray = Array.from(productElements);
+    productsArray.sort(function (a, b) {
+      var nameA = a.querySelector('h6 strong').innerText.toLowerCase();
+      var nameB = b.querySelector('h6 strong').innerText.toLowerCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
+    var productContainer = document.getElementById('product-container');
+    productContainer.innerHTML = '';
+    productsArray.forEach(function (product) {
+      productContainer.appendChild(product);
+    });
+
+  }
+</script>
+
+<hr>
+<hr>
+<hr>
+{% endblock main-content %}

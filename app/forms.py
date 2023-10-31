@@ -14,6 +14,6 @@ class ShippingAddressForm(forms.Form):
         max_length=10,
         required=True,
         error_messages={
-            'invalid': 'Vui lòng nhập số hợp lệ.',
+            'invalid': 'Vui lòng nhập đúng số điện thoại.',
         }
     )
