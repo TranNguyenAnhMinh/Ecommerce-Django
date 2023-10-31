@@ -1,5 +1,7 @@
 # Introdution Ecommerce-Django
 Đây là một website bán đồng hồ online được xây dựng bằng Django.
+link trang web để tham khảo trước
+https://trannguyena.pythonanywhere.com/
 ## Các chức năng chính
 
 -Quản lý sản phẩm: Thêm/sửa/xóa sản phẩm, phân loại sản phẩm.
