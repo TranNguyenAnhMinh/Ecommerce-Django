@@ -12,15 +12,17 @@
 
 -Tìm kiếm sản phẩm
 
+-Lọc sản phẩm
+
 -Đặt hàng online(ship COD)
 
 -Giỏ hàng
 ## Công nghệ sử dụng
-Python/Django
+-Python/Django
 
-HTML/CSS/Javascript/Bootstrap cho giao diện frontend
+-HTML/CSS/Javascript/Bootstrap cho giao diện frontend
 
-Cơ sở dữ liệu: SQLite
+-Cơ sở dữ liệu: SQLite
 ## run project
 ### Cài đặt các thư viện cần thiết bằng pip
 -pip install django
